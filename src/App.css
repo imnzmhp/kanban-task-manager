@@ -1,0 +1,219 @@
+/**
+ * Main App Component Styles
+ * Requirements: 7.1 - Responsive design with desktop and mobile support
+ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  width: 100%;
+  padding: var(--space-md, 16px) 0;
+  border-bottom: 1px solid var(--color-border, #e1e5e9);
+  background-color: var(--color-background, #ffffff);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-title {
+  color: var(--color-text-primary, #213547);
+  font-size: var(--font-xl, 20px);
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.025em;
+}
+
+.app-subtitle {
+  color: var(--color-text-secondary, #64748b);
+  font-size: var(--font-sm, 13px);
+  font-weight: 400;
+  margin: var(--space-xs, 4px) 0 0 0;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  padding: var(--space-md, 16px) 0 var(--space-2xl, 48px);
+  min-height: 0;
+}
+
+.app-footer {
+  width: 100%;
+  padding: var(--space-lg, 24px) 0;
+  border-top: 1px solid var(--color-border, #e1e5e9);
+  background-color: var(--color-surface, #f8fafc);
+  text-align: center;
+}
+
+.app-footer p {
+  margin: 0;
+  font-size: var(--font-xs, 11px);
+  color: var(--color-text-secondary, #64748b);
+  opacity: 0.7;
+}
+
+/* Mobile First Responsive Design */
+@media (max-width: 767px) {
+  .app-header {
+    padding: var(--space-sm, 8px) 0;
+  }
+  
+  .app-title {
+    font-size: var(--font-lg, 18px);
+  }
+  
+  .app-subtitle {
+    font-size: var(--font-xs, 11px);
+  }
+  
+  .app-main {
+    padding: var(--space-sm, 8px) 0 var(--space-xl, 32px);
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-header {
+    padding: var(--space-md, 16px) 0;
+  }
+  
+  .app-title {
+    font-size: var(--font-2xl, 24px);
+  }
+  
+  .app-subtitle {
+    font-size: var(--font-sm, 13px);
+    margin-top: var(--space-sm, 8px);
+  }
+  
+  .app-main {
+    padding: var(--space-lg, 24px) 0 var(--space-2xl, 48px);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .app-header {
+    padding: var(--space-lg, 24px) 0;
+  }
+  
+  .app-title {
+    font-size: var(--font-3xl, 30px);
+  }
+  
+  .app-subtitle {
+    font-size: var(--font-base, 14px);
+    margin-top: var(--space-sm, 8px);
+  }
+  
+  .app-main {
+    padding: var(--space-xl, 32px) 0 var(--space-3xl, 64px);
+  }
+}
+
+/* Skip Link for Accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary, #3b82f6);
+  color: white;
+  padding: var(--space-sm, 8px) var(--space-md, 16px);
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 10000;
+  font-size: var(--font-sm, 13px);
+  font-weight: 600;
+  transition: top var(--duration-fast, 150ms) ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .app-header {
+    background-color: var(--color-background-dark, #0f172a);
+    border-bottom-color: var(--color-border-dark, #334155);
+  }
+  
+  .app-title {
+    color: var(--color-text-primary-dark, #f1f5f9);
+  }
+  
+  .app-subtitle {
+    color: var(--color-text-secondary-dark, #94a3b8);
+  }
+  
+  .app-footer {
+    background-color: var(--color-surface-dark, #1e293b);
+    border-top-color: var(--color-border-dark, #334155);
+  }
+  
+  .app-footer p {
+    color: var(--color-text-secondary-dark, #94a3b8);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .app-header {
+    border-bottom: 3px solid #000;
+  }
+  
+  .app-title {
+    color: #000;
+    font-weight: 800;
+  }
+  
+  .app-subtitle {
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .app-footer {
+    border-top: 3px solid #000;
+  }
+  
+  .app-footer p {
+    color: #000;
+    font-weight: 500;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .app-header {
+    position: static;
+  }
+  
+  .skip-link {
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .app-header {
+    position: static;
+    box-shadow: none;
+    border-bottom: 2px solid #000;
+  }
+  
+  .app-footer {
+    display: none;
+  }
+  
+  .skip-link {
+    display: none;
+  }
+}

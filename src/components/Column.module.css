@@ -1,0 +1,290 @@
+/**
+ * Column component styles (CSS Module)
+ * Requirements: 7.1, 7.3, 7.4
+ */
+
+.column {
+  flex: 1;
+  min-width: 320px;
+  max-width: 380px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  min-height: 600px;
+}
+
+/* Column Header */
+.columnHeader {
+  padding: 16px 20px;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.columnTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.taskCount {
+  background: rgba(255, 255, 255, 0.9);
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Column Content */
+.columnContent {
+  flex: 1;
+  padding: 20px;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 0 0 12px 12px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.columnContent.draggingOver {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Task List */
+.taskList {
+  flex: 1;
+  min-height: 200px;
+}
+
+/* Add Task Button */
+.addTaskButton {
+  width: 100%;
+  padding: 16px;
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+.addTaskButton:hover {
+  background: #f8fafc;
+  border-color: currentColor;
+  color: #374151;
+}
+
+.addTaskButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.addTaskIcon {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.addTaskText {
+  font-weight: 500;
+}
+
+/* Empty State */
+.emptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.emptyMessage {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .column {
+    min-width: 280px;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .columnHeader {
+    padding: 12px 16px;
+  }
+  
+  .columnTitle {
+    font-size: 16px;
+  }
+  
+  .columnContent {
+    padding: 16px;
+    min-height: 400px;
+  }
+  
+  .addTaskButton {
+    padding: 12px;
+    font-size: 13px;
+  }
+  
+  .emptyState {
+    padding: 30px 16px;
+  }
+  
+  .emptyMessage {
+    font-size: 13px;
+  }
+}
+
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+  .column {
+    min-width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .columnHeader {
+    padding: 10px 12px;
+  }
+  
+  .columnTitle {
+    font-size: 15px;
+  }
+  
+  .taskCount {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+  
+  .columnContent {
+    padding: 12px;
+    min-height: 300px;
+  }
+  
+  .addTaskButton {
+    padding: 10px;
+    font-size: 12px;
+  }
+  
+  .emptyState {
+    padding: 20px 12px;
+  }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .columnContent {
+    transition: none;
+  }
+  
+  .addTaskButton {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .column {
+    border: 2px solid #000;
+  }
+  
+  .columnHeader {
+    border-bottom: 3px solid;
+  }
+  
+  .addTaskButton {
+    border-width: 3px;
+    font-weight: 700;
+  }
+  
+  .emptyMessage {
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .column {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+    min-height: auto;
+  }
+  
+  .addTaskButton {
+    display: none;
+  }
+  
+  .emptyState {
+    display: none;
+  }
+}
+
+/* Focus Management */
+.column:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Animation for drag over state */
+.columnContent.draggingOver::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border: 2px dashed #3b82f6;
+  border-radius: 8px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Status-specific hover effects */
+.column[data-testid="column-TODO"] .addTaskButton:hover {
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.column[data-testid="column-DOING"] .addTaskButton:hover {
+  border-color: #f57c00;
+  color: #f57c00;
+}
+
+.column[data-testid="column-DONE"] .addTaskButton:hover {
+  border-color: #388e3c;
+  color: #388e3c;
+}

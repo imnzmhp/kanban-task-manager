@@ -1,0 +1,412 @@
+/**
+ * AppInitializer component styles (CSS Module)
+ * Requirements: 7.1, 7.3, 7.4
+ */
+
+/* Loading Screen */
+.appLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.loadingContainer {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 48px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.loadingSpinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 24px;
+  border: 4px solid rgba(102, 126, 234, 0.2);
+  border-left: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingContainer h2 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loadingContainer p {
+  margin: 0;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* Error Screen */
+.appError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.errorContainer {
+  text-align: center;
+  background: white;
+  padding: 48px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(220, 38, 38, 0.15);
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.errorIcon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.errorContainer h2 {
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+.errorMessage {
+  margin: 0 0 32px 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6b7280;
+}
+
+.errorActions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.retryButton, .continueButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.retryButton {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: white;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.retryButton:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+}
+
+.continueButton {
+  background: white;
+  color: #374151;
+  border: 2px solid #d1d5db;
+}
+
+.continueButton:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+}
+
+.retryButton:focus, .continueButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Storage Health Indicator (Development Only) */
+.storageHealthIndicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-size: 12px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.healthStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.healthStatus.unhealthy .statusDot {
+  background: #dc2626;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.statusText {
+  font-weight: 500;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .appLoading, .appError {
+    padding: 16px;
+  }
+  
+  .loadingContainer, .errorContainer {
+    padding: 32px;
+  }
+  
+  .loadingSpinner {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .loadingContainer h2, .errorContainer h2 {
+    font-size: 20px;
+  }
+  
+  .errorActions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .retryButton, .continueButton {
+    width: 100%;
+  }
+  
+  .storageHealthIndicator {
+    top: 16px;
+    right: 16px;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .appLoading, .appError {
+    padding: 12px;
+  }
+  
+  .loadingContainer, .errorContainer {
+    padding: 24px;
+  }
+  
+  .errorIcon {
+    font-size: 48px;
+  }
+  
+  .loadingSpinner {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .loadingContainer h2, .errorContainer h2 {
+    font-size: 18px;
+  }
+  
+  .loadingContainer p, .errorMessage {
+    font-size: 14px;
+  }
+  
+  .storageHealthIndicator {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 10px;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .appLoading {
+    background: #ffffff;
+  }
+  
+  .loadingContainer {
+    background: #ffffff;
+    border: 3px solid #000000;
+  }
+  
+  .loadingContainer h2 {
+    background: none;
+    -webkit-text-fill-color: #000000;
+    color: #000000;
+  }
+  
+  .loadingSpinner {
+    border-left-color: #000000;
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  .appError {
+    background: #ffffff;
+  }
+  
+  .errorContainer {
+    border: 3px solid #dc2626;
+  }
+  
+  .retryButton {
+    background: #dc2626;
+    color: #ffffff;
+  }
+  
+  .continueButton {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .loadingSpinner {
+    animation: none;
+    border-left-color: transparent;
+    border-top-color: #667eea;
+  }
+  
+  .errorIcon {
+    animation: none;
+  }
+  
+  .statusDot {
+    animation: none;
+  }
+  
+  .retryButton, .continueButton {
+    transition: none;
+  }
+  
+  .retryButton:hover, .continueButton:hover {
+    transform: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .appLoading {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  }
+  
+  .loadingContainer {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(71, 85, 105, 0.3);
+  }
+  
+  .loadingContainer h2 {
+    color: #f1f5f9;
+  }
+  
+  .loadingContainer p {
+    color: #cbd5e1;
+  }
+  
+  .appError {
+    background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
+  }
+  
+  .errorContainer {
+    background: #1f2937;
+    border-color: rgba(220, 38, 38, 0.3);
+  }
+  
+  .errorContainer h2 {
+    color: #f87171;
+  }
+  
+  .errorMessage {
+    color: #d1d5db;
+  }
+  
+  .continueButton {
+    background: #374151;
+    color: #d1d5db;
+    border-color: #6b7280;
+  }
+  
+  .continueButton:hover {
+    background: #4b5563;
+    border-color: #9ca3af;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .appLoading, .appError {
+    background: white;
+    padding: 0;
+  }
+  
+  .loadingContainer, .errorContainer {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .loadingSpinner, .errorIcon {
+    display: none;
+  }
+  
+  .errorActions {
+    display: none;
+  }
+  
+  .storageHealthIndicator {
+    display: none;
+  }
+}
+
+/* Focus Management */
+.loadingContainer:focus-within,
+.errorContainer:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 4px;
+}

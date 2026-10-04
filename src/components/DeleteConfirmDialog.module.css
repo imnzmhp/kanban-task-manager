@@ -1,0 +1,290 @@
+/**
+ * DeleteConfirmDialog component styles (CSS Module)
+ * Modal dialog for task deletion confirmation
+ */
+
+/* Backdrop overlay */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: backdropFadeIn 0.2s ease-out;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dialog container */
+.dialog {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: dialogSlideIn 0.3s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header section */
+.header {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+}
+
+/* Content section */
+.content {
+  padding: 20px 24px;
+}
+
+.message {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.taskTitle {
+  font-weight: 600;
+  color: #1f2937;
+  background-color: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.warning {
+  margin: 0;
+  font-size: 14px;
+  color: #dc2626;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Actions section */
+.actions {
+  padding: 16px 24px 24px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  min-width: 80px;
+}
+
+.cancelButton {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.cancelButton:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.cancelButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.confirmButton {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.confirmButton:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.confirmButton:focus {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
+.confirmButton:active {
+  background: #991b1b;
+  transform: scale(0.98);
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .dialog {
+    max-width: 350px;
+    width: 95%;
+    margin: 16px;
+  }
+
+  .header {
+    padding: 20px 20px 14px 20px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 16px 20px;
+  }
+
+  .message {
+    font-size: 15px;
+  }
+
+  .warning {
+    font-size: 13px;
+  }
+
+  .actions {
+    padding: 14px 20px 20px 20px;
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  /* Reverse order on mobile so confirm is at bottom */
+  .cancelButton {
+    order: 2;
+  }
+
+  .confirmButton {
+    order: 1;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .dialog {
+    width: calc(100% - 32px);
+    margin: 16px;
+  }
+
+  .header {
+    padding: 16px;
+  }
+
+  .content {
+    padding: 12px 16px;
+  }
+
+  .actions {
+    padding: 12px 16px 16px 16px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .message {
+    font-size: 14px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .dialog {
+    border: 2px solid #000;
+  }
+
+  .title {
+    color: #000;
+  }
+
+  .message {
+    color: #000;
+  }
+
+  .taskTitle {
+    background-color: #ffff00;
+    color: #000;
+    border: 1px solid #000;
+  }
+
+  .cancelButton {
+    border: 2px solid #000;
+    background: #fff;
+    color: #000;
+  }
+
+  .confirmButton {
+    border: 2px solid #dc2626;
+    background: #dc2626;
+    color: #fff;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop {
+    animation: none;
+  }
+
+  .dialog {
+    animation: none;
+  }
+
+  .button {
+    transition: none;
+  }
+}
+
+/* Focus trap styles for accessibility */
+.dialog:focus {
+  outline: none;
+}
+
+/* Print styles */
+@media print {
+  .backdrop {
+    display: none;
+  }
+}

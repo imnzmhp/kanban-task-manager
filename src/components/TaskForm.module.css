@@ -1,0 +1,455 @@
+/**
+ * TaskForm component styles (CSS Module)
+ * Requirements: 7.1, 7.3, 7.4
+ */
+
+/* Modal Backdrop */
+.taskFormBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.taskFormModal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Form Styles */
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.taskFormHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+}
+
+.taskFormTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.taskFormCloseButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.taskFormCloseButton:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.taskFormCloseButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Form Content */
+.taskFormContent {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.formField {
+  margin-bottom: 24px;
+}
+
+.formField:last-child {
+  margin-bottom: 0;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.requiredMark {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+/* Input Styles */
+.formInput, .formTextarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1f2937;
+  background: white;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.formInput:focus, .formTextarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.formInput::placeholder, .formTextarea::placeholder {
+  color: #9ca3af;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Error States */
+.formInputError, .formTextareaError {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.formInputError:focus, .formTextareaError:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.formError {
+  margin-top: 8px;
+}
+
+.formErrorMessage {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.formErrorMessage:last-child {
+  margin-bottom: 0;
+}
+
+/* Help Text */
+.formHelp {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Form Footer */
+.taskFormFooter {
+  padding: 16px 24px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+/* Button Styles */
+.formButton {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.formButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.formButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.formButtonSecondary {
+  background: white;
+  color: #374151;
+  border: 2px solid #d1d5db;
+}
+
+.formButtonSecondary:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.formButtonPrimary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.formButtonPrimary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .taskFormBackdrop {
+    padding: 16px;
+  }
+  
+  .taskFormModal {
+    max-width: 100%;
+  }
+  
+  .taskFormHeader {
+    padding: 20px 20px 16px;
+  }
+  
+  .taskFormTitle {
+    font-size: 18px;
+  }
+  
+  .taskFormContent {
+    padding: 20px;
+  }
+  
+  .taskFormFooter {
+    padding: 16px 20px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .taskFormBackdrop {
+    padding: 12px;
+    align-items: flex-end;
+  }
+  
+  .taskFormModal {
+    max-height: 85vh;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .taskFormHeader {
+    padding: 16px 16px 12px;
+  }
+  
+  .taskFormTitle {
+    font-size: 16px;
+  }
+  
+  .taskFormContent {
+    padding: 16px;
+  }
+  
+  .formField {
+    margin-bottom: 20px;
+  }
+  
+  .taskFormFooter {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 16px 16px;
+  }
+  
+  .formButton {
+    width: 100%;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .taskFormModal {
+    border: 2px solid #000;
+  }
+  
+  .taskFormHeader {
+    background: white;
+    border-bottom: 2px solid #000;
+  }
+  
+  .formInput, .formTextarea {
+    border: 2px solid #000;
+  }
+  
+  .formInputError, .formTextareaError {
+    border: 2px solid #dc2626;
+    background: white;
+  }
+  
+  .formButtonSecondary {
+    border: 2px solid #000;
+  }
+  
+  .formButtonPrimary {
+    background: #000;
+    color: white;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .taskFormBackdrop {
+    animation: none;
+  }
+  
+  .taskFormModal {
+    animation: none;
+  }
+  
+  .formButton {
+    transition: none;
+  }
+  
+  .formButtonPrimary:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .taskFormModal {
+    background: #1f2937;
+    border: 1px solid #374151;
+  }
+  
+  .taskFormHeader {
+    background: linear-gradient(135deg, #374151, #1f2937);
+    border-bottom-color: #4b5563;
+  }
+  
+  .taskFormTitle {
+    color: #f9fafb;
+  }
+  
+  .taskFormCloseButton {
+    color: #d1d5db;
+  }
+  
+  .taskFormCloseButton:hover {
+    background: #374151;
+    color: #f3f4f6;
+  }
+  
+  .formLabel {
+    color: #d1d5db;
+  }
+  
+  .formInput, .formTextarea {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .formInput::placeholder, .formTextarea::placeholder {
+    color: #9ca3af;
+  }
+  
+  .formInput:focus, .formTextarea:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+  
+  .formInputError, .formTextareaError {
+    background: #450a0a;
+    border-color: #dc2626;
+  }
+  
+  .formHelp {
+    color: #9ca3af;
+  }
+  
+  .taskFormFooter {
+    background: #374151;
+    border-top-color: #4b5563;
+  }
+  
+  .formButtonSecondary {
+    background: #374151;
+    color: #d1d5db;
+    border-color: #6b7280;
+  }
+  
+  .formButtonSecondary:hover:not(:disabled) {
+    background: #4b5563;
+    border-color: #9ca3af;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .taskFormBackdrop {
+    display: none;
+  }
+}
+
+/* Focus Management for Better Accessibility */
+.taskFormModal:focus-within {
+  outline: none;
+}
+
+/* Animation for validation errors */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.formInputError, .formTextareaError {
+  animation: shake 0.5s ease-in-out;
+}

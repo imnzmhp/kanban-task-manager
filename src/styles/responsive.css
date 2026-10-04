@@ -1,0 +1,501 @@
+/**
+ * Responsive Design System for Kanban Task Manager
+ * Requirements: 7.1 - Responsive design, desktop/mobile support, touch device support
+ * 
+ * This file provides:
+ * - Breakpoint definitions
+ * - Mobile-first responsive utilities
+ * - Touch device optimizations
+ * - Container queries for modern browsers
+ */
+
+/* ========================================
+   CSS Custom Properties (Design Tokens)
+   ======================================== */
+
+:root {
+  /* Breakpoints */
+  --bp-mobile: 320px;
+  --bp-mobile-large: 480px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+  --bp-desktop-large: 1200px;
+  --bp-ultra-wide: 1440px;
+
+  /* Spacing Scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Font Sizes - Mobile First */
+  --font-xs: 11px;
+  --font-sm: 13px;
+  --font-base: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+  --font-3xl: 30px;
+
+  /* Touch Target Sizes */
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
+
+  /* Container Widths */
+  --container-mobile: 100%;
+  --container-tablet: 720px;
+  --container-desktop: 960px;
+  --container-large: 1140px;
+  --container-xl: 1320px;
+
+  /* Z-index Scale */
+  --z-dropdown: 1000;
+  --z-modal: 1050;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ========================================
+   Base Layout Container
+   ======================================== */
+
+.responsive-container {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .responsive-container {
+    max-width: var(--container-tablet);
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .responsive-container {
+    max-width: var(--container-desktop);
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .responsive-container {
+    max-width: var(--container-large);
+  }
+}
+
+/* Ultra-wide */
+@media (min-width: 1440px) {
+  .responsive-container {
+    max-width: var(--container-xl);
+  }
+}
+
+/* ========================================
+   Kanban Board Responsive Layout
+   ======================================== */
+
+/* Override existing .board-columns with responsive grid system */
+.board-columns {
+  display: grid !important;
+  gap: var(--space-md);
+  min-height: 70vh;
+  padding: var(--space-md) 0;
+  width: 100%;
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  overflow-x: visible !important;
+  flex-direction: unset !important;
+}
+
+/* Mobile: Single column, stacked layout */
+@media (max-width: 767px) {
+  .board-columns {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-lg);
+    padding: var(--space-sm) 0;
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  
+  .board-columns .column {
+    min-height: 300px;
+    margin: 0 !important;
+    flex: none;
+  }
+}
+
+/* Tablet: Two columns, with DONE below */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .board-columns {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-areas: 
+      "todo doing"
+      "done done";
+    gap: var(--space-lg);
+  }
+  
+  .board-columns .column:nth-child(1) { grid-area: todo; }
+  .board-columns .column:nth-child(2) { grid-area: doing; }
+  .board-columns .column:nth-child(3) { grid-area: done; }
+  
+  .board-columns .column {
+    margin: 0 !important;
+  }
+}
+
+/* Desktop and above: Three columns side by side */
+@media (min-width: 1024px) {
+  .board-columns {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: var(--space-xl);
+    padding: var(--space-lg) 0;
+  }
+  
+  .board-columns .column {
+    margin: 0 !important;
+  }
+}
+
+/* Ultra-wide: Maximum column width for readability */
+@media (min-width: 1440px) {
+  .board-columns {
+    grid-template-columns: repeat(3, minmax(300px, 400px)) !important;
+    justify-content: center;
+    gap: var(--space-2xl);
+  }
+}
+
+/* ========================================
+   Touch Device Optimizations
+   ======================================== */
+
+/* Increase touch targets on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .task-card {
+    min-height: var(--touch-target-comfortable);
+    cursor: default;
+  }
+
+  .task-card__action-btn {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+    font-size: var(--font-md);
+  }
+
+  .add-task-button {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--font-base);
+  }
+
+  /* Always show action buttons on touch devices */
+  .task-card__actions {
+    opacity: 1 !important;
+  }
+
+  /* Remove hover effects on touch devices */
+  .task-card:hover {
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .add-task-button:hover {
+    transform: none;
+  }
+}
+
+/* Fine pointer devices (mouse, trackpad) */
+@media (hover: hover) and (pointer: fine) {
+  .task-card {
+    cursor: grab;
+  }
+
+  .task-card:active {
+    cursor: grabbing;
+  }
+}
+
+/* ========================================
+   Responsive Typography
+   ======================================== */
+
+/* Base mobile typography */
+.app-title {
+  font-size: var(--font-xl);
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+}
+
+.column-title {
+  font-size: var(--font-base);
+}
+
+.task-title {
+  font-size: var(--font-sm);
+}
+
+.task-description {
+  font-size: var(--font-xs);
+}
+
+/* Tablet typography scaling */
+@media (min-width: 768px) {
+  .app-title {
+    font-size: var(--font-2xl);
+    margin-bottom: var(--space-lg);
+  }
+
+  .column-title {
+    font-size: var(--font-md);
+  }
+
+  .task-title {
+    font-size: var(--font-base);
+  }
+
+  .task-description {
+    font-size: var(--font-sm);
+  }
+}
+
+/* Desktop typography scaling */
+@media (min-width: 1024px) {
+  .app-title {
+    font-size: var(--font-3xl);
+    margin-bottom: var(--space-xl);
+  }
+
+  .column-title {
+    font-size: var(--font-lg);
+  }
+
+  .task-title {
+    font-size: var(--font-md);
+  }
+
+  .task-description {
+    font-size: var(--font-base);
+  }
+}
+
+/* ========================================
+   Responsive Utilities
+   ======================================== */
+
+/* Show/hide utilities for different breakpoints */
+.mobile-only {
+  display: block;
+}
+
+.tablet-up {
+  display: none;
+}
+
+.desktop-up {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .tablet-up {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-up {
+    display: block;
+  }
+}
+
+/* Responsive spacing utilities */
+.spacing-responsive {
+  padding: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .spacing-responsive {
+    padding: var(--space-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .spacing-responsive {
+    padding: var(--space-lg);
+  }
+}
+
+/* ========================================
+   Modal and Dialog Responsive Behavior
+   ======================================== */
+
+.modal-container {
+  width: 90vw;
+  max-width: 500px;
+  margin: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .modal-container {
+    width: 80vw;
+    max-width: 600px;
+    margin: var(--space-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal-container {
+    width: 70vw;
+    max-width: 700px;
+    margin: var(--space-xl);
+  }
+}
+
+/* ========================================
+   Landscape Orientation Optimizations
+   ======================================== */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .app-header {
+    padding: var(--space-sm) 0;
+  }
+  
+  .app-title {
+    font-size: var(--font-lg);
+    margin-bottom: var(--space-sm);
+  }
+  
+  .kanban-board {
+    min-height: 50vh;
+  }
+  
+  .column-content {
+    min-height: 120px;
+  }
+}
+
+/* ========================================
+   High DPI / Retina Display Support
+   ======================================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .task-card {
+    border-width: 0.5px;
+  }
+  
+  .column {
+    border-width: 0.5px;
+  }
+}
+
+/* ========================================
+   Accessibility: Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .task-card:hover {
+    transform: none;
+  }
+  
+  .add-task-button:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  .kanban-board {
+    display: block !important;
+    grid-template-columns: none !important;
+  }
+  
+  .column {
+    break-inside: avoid;
+    margin-bottom: var(--space-lg);
+    page-break-inside: avoid;
+  }
+  
+  .task-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  .add-task-button,
+  .task-card__actions {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   Container Queries (Modern Browser Support)
+   ======================================== */
+
+@supports (container-type: inline-size) {
+  .kanban-board {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 600px) {
+    .column {
+      padding: var(--space-sm);
+    }
+    
+    .task-card {
+      padding: var(--space-sm);
+    }
+  }
+
+  @container (min-width: 900px) {
+    .column {
+      min-width: 280px;
+    }
+  }
+}
+
+/* ========================================
+   Performance Optimizations
+   ======================================== */
+
+/* GPU acceleration for smooth animations on mobile */
+.task-card,
+.column-content {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize scrolling on mobile */
+.column-content {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
