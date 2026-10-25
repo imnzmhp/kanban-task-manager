@@ -3,7 +3,7 @@
  * Allows users to backup and transfer data between devices/browsers
  */
 
-import { Task, StoredData } from '../types/Task';
+import { StoredData } from '../types/Task';
 import { LocalStorageService } from './LocalStorageService';
 
 export class DataExportService {
@@ -64,8 +64,8 @@ export class DataExportService {
             return;
           }
 
-          // Convert dates and save
-          const tasks: Task[] = importData.tasks.map(task => ({
+          // Convert dates and save（レガシー/V2どちらの形式もそのまま保持）
+          const tasks = importData.tasks.map(task => ({
             ...task,
             createdAt: new Date(task.createdAt),
             updatedAt: new Date(task.updatedAt)
@@ -108,7 +108,7 @@ export class DataExportService {
         throw new Error('無効なデータ形式です');
       }
 
-      const tasks: Task[] = importData.tasks.map(task => ({
+      const tasks = importData.tasks.map(task => ({
         ...task,
         createdAt: new Date(task.createdAt),
         updatedAt: new Date(task.updatedAt)

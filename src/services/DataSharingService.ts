@@ -5,6 +5,7 @@
 
 import { Task } from '../types/Task';
 import { LocalStorageService } from './LocalStorageService';
+import { TaskV2Converter } from '../utils/TaskV2Converter';
 
 export class DataSharingService {
   /**
@@ -21,7 +22,7 @@ export class DataSharingService {
           i: task.id,
           tt: task.title,
           d: task.description,
-          s: task.status,
+          s: TaskV2Converter.getEffectiveStatus(task),
           c: task.createdAt.getTime(),
           u: task.updatedAt.getTime()
         })),

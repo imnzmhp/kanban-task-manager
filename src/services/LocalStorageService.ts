@@ -1,12 +1,14 @@
 /**
  * LocalStorageService - Data persistence service using Browser Local Storage
- * Requirements: 6.1, 6.2, 6.3, 6.4
+ * Enhanced with comprehensive error handling using SystemError framework
+ * Requirements: 6.1, 6.2, 6.3, 6.4, 16.2
  * 
  * This service provides abstraction for Local Storage operations with proper
  * error handling and data validation for the Kanban Task Manager.
  */
 
-import { Task, StoredData } from '../types/Task';
+import { Task, TaskV2, StoredData } from '../types/Task';
+import { ErrorHandler } from './ErrorHandler';
 
 /**
  * Custom error class for storage-related issues
@@ -34,22 +36,49 @@ export class LocalStorageService {
   private static readonly CURRENT_VERSION = '1.0.0';
 
   /**
-   * Save tasks array to Local Storage
-   * Requirements: 6.1, 6.3
+   * Save tasks array to Local Storage with comprehensive error handling
+   * Requirements: 6.1, 6.3, 16.2
    * 
    * @param tasks - Array of tasks to save
    * @throws {StorageError} When storage operation fails
    */
-  static saveTasks(tasks: Task[]): void {
+  static async saveTasks(tasks: (Task | TaskV2)[]): Promise<void> {
     try {
       // Validate input data
       if (!Array.isArray(tasks)) {
+        await ErrorHandler.handleStorageError(
+          'STORAGE_SERIALIZATION_FAILED',
+          'Invalid tasks data: expected array',
+          {
+            operation: 'write',
+            storageType: 'localStorage',
+            dataSize: 0
+          }
+        );
         throw new StorageError('Invalid tasks data: expected array');
       }
 
       // Validate each task structure
       for (const task of tasks) {
-        LocalStorageService.validateTask(task);
+        try {
+          LocalStorageService.validateTask(task);
+        } catch (validationError) {
+          console.error('Task validation failed for task:', task);
+          console.error('Validation error:', validationError);
+          const validationMessage = validationError instanceof Error
+            ? validationError.message
+            : String(validationError);
+          await ErrorHandler.handleStorageError(
+            'STORAGE_SERIALIZATION_FAILED',
+            `Task validation failed: ${validationMessage}`,
+            {
+              operation: 'write',
+              storageType: 'localStorage',
+              dataSize: JSON.stringify(task).length
+            }
+          );
+          throw validationError;
+        }
       }
 
       // Create stored data structure with metadata
@@ -64,22 +93,102 @@ export class LocalStorageService {
       
       // Check if Local Storage is available and has space
       if (!LocalStorageService.isStorageAvailable()) {
+        await ErrorHandler.handleStorageError(
+          'STORAGE_ACCESS_DENIED',
+          'Local Storage is not available',
+          {
+            operation: 'write',
+            storageType: 'localStorage',
+            dataSize: serializedData.length
+          },
+          async () => {
+            // Recovery action: try session storage fallback
+            await ErrorHandler.RecoveryActions.fallbackStorage();
+          }
+        );
         throw new StorageError('Local Storage is not available');
       }
 
-      localStorage.setItem(LocalStorageService.TASKS_KEY, serializedData);
+      // Check available quota before saving large data
+      if (serializedData.length > 100000) { // 100KB threshold
+        try {
+          // Estimate quota usage
+          if (navigator.storage && navigator.storage.estimate) {
+            const estimate = await navigator.storage.estimate();
+            if (estimate.quota && estimate.usage) {
+              const remainingQuota = estimate.quota - estimate.usage;
+              if (serializedData.length > remainingQuota) {
+                await ErrorHandler.handleStorageError(
+                  'STORAGE_QUOTA_EXCEEDED',
+                  'Storage quota would be exceeded',
+                  {
+                    operation: 'write',
+                    storageType: 'localStorage',
+                    dataSize: serializedData.length,
+                    availableQuota: remainingQuota
+                  },
+                  async () => {
+                    // Recovery action: compress data by removing old backups
+                    await ErrorHandler.RecoveryActions.handleStorageQuota();
+                  }
+                );
+              }
+            }
+          }
+        } catch (quotaError) {
+          // Quota API not supported, continue with save attempt
+          console.warn('Storage quota estimation not supported');
+        }
+      }
+
+      try {
+        localStorage.setItem(LocalStorageService.TASKS_KEY, serializedData);
+      } catch (setItemError) {
+        if (setItemError instanceof DOMException && setItemError.code === 22) {
+          await ErrorHandler.handleStorageError(
+            'STORAGE_QUOTA_EXCEEDED',
+            'Storage quota exceeded during save',
+            {
+              operation: 'write',
+              storageType: 'localStorage',
+              dataSize: serializedData.length
+            },
+            async () => {
+              // Recovery action: compress storage and retry
+              await ErrorHandler.RecoveryActions.handleStorageQuota();
+            }
+          );
+          throw new StorageError('Storage quota exceeded. Please free up space.', setItemError);
+        }
+        
+        await ErrorHandler.handleStorageError(
+          'STORAGE_SERIALIZATION_FAILED',
+          'Failed to write to localStorage',
+          {
+            operation: 'write',
+            storageType: 'localStorage',
+            dataSize: serializedData.length
+          }
+        );
+        throw setItemError;
+      }
       
     } catch (error) {
       if (error instanceof StorageError) {
         throw error;
       }
       
-      // Handle quota exceeded errors
-      if (error instanceof DOMException && error.code === 22) {
-        throw new StorageError('Storage quota exceeded. Please free up space.', error);
-      }
+      // Handle unexpected errors
+      await ErrorHandler.handleStorageError(
+        'STORAGE_SERIALIZATION_FAILED',
+        'Unexpected error during save operation',
+        {
+          operation: 'write',
+          storageType: 'localStorage',
+          dataSize: 0
+        }
+      );
       
-      // Handle other storage errors
       throw new StorageError('Failed to save tasks to Local Storage', error as Error);
     }
   }
@@ -91,7 +200,7 @@ export class LocalStorageService {
    * @returns Array of tasks from storage, empty array if no data or error
    * @throws {StorageError} When storage operation fails critically
    */
-  static loadTasks(): Task[] {
+  static loadTasks(): (Task | TaskV2)[] {
     try {
       // Check if Local Storage is available
       if (!LocalStorageService.isStorageAvailable()) {
@@ -117,7 +226,7 @@ export class LocalStorageService {
       }
 
       // Validate and convert tasks
-      const tasks: Task[] = storedData.tasks.map(task => {
+      const tasks: (Task | TaskV2)[] = storedData.tasks.map(task => {
         // Convert date strings back to Date objects
         return {
           ...task,
@@ -192,6 +301,78 @@ export class LocalStorageService {
       
     } catch (error) {
       return false;
+    }
+  }
+
+  /**
+   * Generic method to get an item from Local Storage
+   * 
+   * @param key - Storage key
+   * @returns Parsed data or null if not found
+   */
+  static async getItem<T>(key: string): Promise<T | null> {
+    try {
+      if (!LocalStorageService.isStorageAvailable()) {
+        return null;
+      }
+
+      const storedDataString = localStorage.getItem(key);
+      
+      if (!storedDataString) {
+        return null;
+      }
+
+      return JSON.parse(storedDataString) as T;
+      
+    } catch (error) {
+      console.error(`Failed to get item from Local Storage (key: ${key}):`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Generic method to set an item in Local Storage
+   * 
+   * @param key - Storage key
+   * @param data - Data to store
+   */
+  static async setItem<T>(key: string, data: T): Promise<void> {
+    try {
+      if (!LocalStorageService.isStorageAvailable()) {
+        throw new StorageError('Local Storage is not available');
+      }
+
+      const serializedData = JSON.stringify(data);
+      localStorage.setItem(key, serializedData);
+      
+    } catch (error) {
+      if (error instanceof StorageError) {
+        throw error;
+      }
+      
+      if (error instanceof DOMException && error.code === 22) {
+        throw new StorageError('Storage quota exceeded. Please free up space.', error);
+      }
+      
+      throw new StorageError(`Failed to save data to Local Storage (key: ${key})`, error as Error);
+    }
+  }
+
+  /**
+   * Generic method to remove an item from Local Storage
+   * 
+   * @param key - Storage key
+   */
+  static async removeItem(key: string): Promise<void> {
+    try {
+      if (!LocalStorageService.isStorageAvailable()) {
+        throw new StorageError('Local Storage is not available');
+      }
+
+      localStorage.removeItem(key);
+      
+    } catch (error) {
+      throw new StorageError(`Failed to remove item from Local Storage (key: ${key})`, error as Error);
     }
   }
 
@@ -277,12 +458,17 @@ export class LocalStorageService {
       throw new StorageError('Invalid task: must be an object');
     }
 
-    // Check required properties
-    const requiredProps = ['id', 'title', 'description', 'status', 'createdAt', 'updatedAt'];
-    for (const prop of requiredProps) {
+    // Check required properties (common to both Task and TaskV2)
+    const commonProps = ['id', 'title', 'description', 'createdAt', 'updatedAt'];
+    for (const prop of commonProps) {
       if (!(prop in task)) {
         throw new StorageError(`Invalid task: missing required property '${prop}'`);
       }
+    }
+    
+    // Check that task has either status (Task) or statusId (TaskV2)
+    if (!('status' in task) && !('statusId' in task)) {
+      throw new StorageError('Invalid task: must have either status (Task) or statusId (TaskV2)');
     }
 
     // Validate property types and values
@@ -306,10 +492,20 @@ export class LocalStorageService {
       throw new StorageError('Invalid task: description must be 1000 characters or less');
     }
 
-    // Validate status
-    const validStatuses = ['TODO', 'DOING', 'DONE'];
-    if (!validStatuses.includes(task.status)) {
-      throw new StorageError(`Invalid task: status must be one of ${validStatuses.join(', ')}`);
+    // Validate status (support both Task and TaskV2)
+    if ('status' in task) {
+      // Legacy Task format
+      const validStatuses = ['TODO', 'DOING', 'DONE'];
+      if (!validStatuses.includes(task.status)) {
+        throw new StorageError(`Invalid task: status must be one of ${validStatuses.join(', ')}`);
+      }
+    } else if ('statusId' in task) {
+      // V2 Task format
+      if (typeof task.statusId !== 'string' || task.statusId.trim() === '') {
+        throw new StorageError('Invalid task: statusId must be a non-empty string');
+      }
+    } else {
+      throw new StorageError('Invalid task: must have either status or statusId');
     }
 
     // Validate dates (they might be strings from JSON)

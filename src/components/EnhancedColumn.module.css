@@ -1,0 +1,359 @@
+/**
+ * EnhancedColumn component styles (CSS Module)
+ * Based on Column.module.css with dynamic status features
+ * 
+ * Requirements: 5.1, 5.2, 5.4, 8.1, 8.2
+ * 
+ * Features:
+ * - Responsive truncation display
+ * - Smooth color transitions for dynamic status changes
+ * - Enhanced tooltip support
+ * - Accessibility improvements
+ */
+
+/* Base enhanced column styles */
+
+.enhancedColumn {
+  flex: 1;
+  min-width: 320px;
+  max-width: 380px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  min-height: 600px;
+  transition: all var(--transition-duration, 300ms) cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+/* Status indicator bar at top */
+
+
+/* Column Header */
+.columnHeader {
+  padding: 16px 20px;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--column-bg-color, #f5f5f5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color var(--transition-duration, 300ms) ease-in-out, 
+              border-color var(--transition-duration, 300ms) ease-in-out;
+}
+.columnTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--column-accent-color, #666);
+  transition: color var(--transition-duration, 300ms) ease-in-out;
+  position: relative;
+  
+  /* Enhanced truncation support */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: help;
+}
+/* Tooltip enhancement for truncated titles */
+.columnTitle[title]:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+.taskCount {
+  background: rgba(255, 255, 255, 0.9);
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  min-width: 24px;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+/* Column Content */
+.columnContent {
+  flex: 1;
+  padding: 20px;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 0 0 12px 12px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.columnContent.draggingOver {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  transition: background-color 0.15s ease-in-out;
+}
+/* Task List */
+.taskList {
+  flex: 1;
+  min-height: 200px;
+}
+/* Add Task Button */
+.addTaskButton {
+  width: 100%;
+  padding: 16px;
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+.addTaskButton:hover {
+  background: #f8fafc;
+  border-color: var(--column-accent-color, #666);
+  color: var(--column-accent-color, #666);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+.addTaskButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+.addTaskIcon {
+  font-size: 18px;
+  font-weight: 700;
+}
+.addTaskText {
+  font-weight: 500;
+}
+/* Empty State */
+.emptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+.emptyMessage {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+/* Enhanced responsive truncation */
+@media (max-width: 768px) {
+  .enhancedColumn {
+    min-width: 280px;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .columnHeader {
+    padding: 12px 16px;
+  }
+ 
+  .columnTitle {
+    font-size: 16px;
+    /* Mobile: 15 character limit */
+    max-width: 15ch;
+  }
+  
+  .columnContent {
+    padding: 16px;
+    min-height: 400px;
+  }
+  
+  .addTaskButton {
+    padding: 12px;
+    font-size: 13px;
+  }
+  
+  .emptyState {
+    padding: 30px 16px;
+  }
+  
+  .emptyMessage {
+    font-size: 13px;
+  }
+}
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+  .enhancedColumn {
+    min-width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .columnHeader {
+    padding: 10px 12px;
+  }
+  
+  .columnTitle {
+    font-size: 15px;
+    /* Small mobile: 12 character limit */
+    max-width: 12ch;
+  }
+  
+  .taskCount {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+  
+  .columnContent {
+    padding: 12px;
+    min-height: 300px;
+  }
+  
+  .addTaskButton {
+    padding: 10px;
+    font-size: 12px;
+  }
+  
+  .emptyState {
+    padding: 20px 12px;
+  }
+}
+/* Desktop: 20 character limit */
+@media (min-width: 1025px) {
+  .columnTitle {
+    max-width: 20ch;
+  }
+}
+/* Tablet: 18 character limit */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .columnTitle {
+    max-width: 18ch;
+    font-size: 17px;
+  }
+}
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .enhancedColumn,
+  .columnHeader,
+  .columnTitle,
+  .taskCount,
+  .columnContent,
+  .addTaskButton {
+    transition: none;
+  }
+} 
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .enhancedColumn {
+    border: 2px solid #000;
+  }
+  
+  .columnHeader {
+    border-bottom: 2px solid;
+  }
+  
+  .columnTitle {
+    font-weight: 800;
+    text-shadow: 0 0 2px currentColor;
+  }
+  
+  .addTaskButton {
+    border-width: 3px;
+    font-weight: 700;
+  }
+  
+  .emptyMessage {
+    color: #333;
+    font-weight: 600;
+  }
+}
+/* Focus Management */
+.enhancedColumn:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+.columnTitle:focus {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Enhanced tooltip styles */
+.columnTitle[title] {
+  position: relative;
+}
+/* Custom tooltip for better visibility */
+@media (hover: hover) {
+  .columnTitle[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    
+    /* Fade in animation */
+    opacity: 0;
+    animation: fadeIn 0.2s ease-in-out forwards;
+  }
+
+  .columnTitle[title]:hover::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 2px;
+    
+    border: 6px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.9);
+    z-index: 1001;
+    
+    opacity: 0;
+    animation: fadeIn 0.2s ease-in-out forwards;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .enhancedColumn {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+    min-height: auto;
+  }
+}
+  
+
+/* RTL support */
+[dir="rtl"] .columnTitle[title]:hover::after {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+[dir="rtl"] .columnTitle[title]:hover::before {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%);
+
+}
+/* Status indicator for visual hierarchy */

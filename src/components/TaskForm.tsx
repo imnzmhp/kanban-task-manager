@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Task, TaskFormData, TaskFormValidation } from '../types/Task';
+import { Task, TaskV2, TaskFormData, TaskFormValidation } from '../types/Task';
 import { useTaskContext } from '../contexts/TaskContext';
 import styles from './TaskForm.module.css';
 
@@ -13,7 +13,7 @@ import styles from './TaskForm.module.css';
  */
 export interface TaskFormProps {
   /** Task to edit (undefined for new task creation) */
-  task?: Task;
+  task?: Task | TaskV2;
   /** Callback when save is successful */
   onSave: (taskData: TaskFormData) => void;
   /** Callback when form is cancelled */

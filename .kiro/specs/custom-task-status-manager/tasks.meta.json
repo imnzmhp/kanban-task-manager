@@ -1,0 +1,720 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 カスタム状態のデータモデルを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206413
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705217346
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705732019
+      }
+    ],
+    "2.1 ColorPaletteクラスを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206458
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705738262
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791706634449
+      }
+    ],
+    "2.3 StatusValidatorクラスを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206491
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705738850
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791706635056
+      }
+    ],
+    "3. チェックポイント - 基盤コンポーネントの動作確認": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206553
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791706641753
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791708162120
+      }
+    ],
+    "4.1 StatusReducerを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206579
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791708187624
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791708690757
+      }
+    ],
+    "4.3 StatusContextを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206607
+      },
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791708696087
+      },
+      {
+        "executionId": "68396cd1-b793-4807-a79c-c79d7e0e1cba",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791709697151
+      },
+      {
+        "executionId": "cb5c34bc-f39c-4c91-8485-6883e159c2b3",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710271584
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710535574
+      }
+    ],
+    "5.1 StatusSerializerクラスを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206639
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551127
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710747958
+      }
+    ],
+    "5.3 LocalStorageServiceを拡張": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206672
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551170
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710840068
+      }
+    ],
+    "6.1 MigrationSystemクラスを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206706
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551218
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791711012139
+      }
+    ],
+    "7. チェックポイント - バックエンド機能の統合テスト": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206763
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551240
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791711018880
+      }
+    ],
+    "8.1 TruncationServiceクラスを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206790
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551262
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791711069092
+      }
+    ],
+    "9.1 基本的なStatusSettingsModalを作成": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206822
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551311
+      },
+      {
+        "executionId": "547cae00-f221-4a9e-ae52-d9563dee76f9",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791711678044
+      },
+      {
+        "executionId": "547cae00-f221-4a9e-ae52-d9563dee76f9",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791712409583
+      }
+    ],
+    "9.2 @dnd-kit/sortableによるドラッグ&ドロップを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206855
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551333
+      },
+      {
+        "executionId": "547cae00-f221-4a9e-ae52-d9563dee76f9",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791712426399
+      },
+      {
+        "executionId": "547cae00-f221-4a9e-ae52-d9563dee76f9",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791713164554
+      }
+    ],
+    "9.4 状態の追加・編集・削除機能を実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206890
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551357
+      },
+      {
+        "executionId": "547cae00-f221-4a9e-ae52-d9563dee76f9",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791713176885
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271399
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713304984
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714298759
+      }
+    ],
+    "10.1 動的状態対応のColumnを作成": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206921
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551394
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271465
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714311876
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715150578
+      }
+    ],
+    "10.2 色遷移アニメーションを実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705206956
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551417
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271520
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714315824
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715155227
+      }
+    ],
+    "11.1 KanbanBoardに設定ボタンを追加": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207020
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551462
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271568
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714319776
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715159712
+      }
+    ],
+    "11.2 動的状態列の生成機能を実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207047
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551485
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271601
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714323710
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715164149
+      }
+    ],
+    "12.1 StatusProviderをAppProvidersに統合": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207080
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551511
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271634
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714327440
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715168407
+      }
+    ],
+    "12.2 AppInitializerを拡張してデータ移行を実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207106
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551533
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271668
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715177641
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716128942
+      }
+    ],
+    "13.1 TaskContextをCustomStatus対応に拡張": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207138
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551556
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271728
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715182080
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716133380
+      }
+    ],
+    "14. チェックポイント - 統合システムの動作確認": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207173
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551580
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271764
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716147681
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716815849
+      }
+    ],
+    "16.1 SystemErrorとErrorSeverityの実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207206
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551606
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271800
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715186748
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716137955
+      }
+    ],
+    "16.2 包括的エラーハンドリングを各コンポーネントに追加": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207264
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551639
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271834
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716821102
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718442492
+      }
+    ],
+    "17.1 システム全体の統合テストを実行": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207296
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551673
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271867
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716825945
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718447487
+      }
+    ],
+    "17.2 デモ用サンプルデータとガイドツアー機能を実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207323
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551697
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271900
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716830940
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718452491
+      }
+    ],
+    "18. 最終チェックポイント - システム完成の確認": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705207355
+      },
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710551719
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791713271934
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718457624
+      },
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718462411
+      }
+    ],
+    "1. 基盤データ構造とタイプ定義の実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791705732076
+      }
+    ],
+    "2. 色生成システムとバリデーションの実装": [
+      {
+        "executionId": "47155b11-ee2c-4605-8b5d-5f38e145a06b",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791706635099
+      }
+    ],
+    "4. 状態管理システムの実装": [
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710535631
+      }
+    ],
+    "5. シリアライゼーションとストレージ層の実装": [
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791710840132
+      }
+    ],
+    "6. データ移行システムの実装": [
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791711012186
+      }
+    ],
+    "8. UI支援サービスの実装": [
+      {
+        "executionId": "1f79e185-cc9e-48f8-8f3b-49acf7bf8f63",
+        "chatSessionId": "sess_8331a15c-19d6-4056-9570-523e3a978858",
+        "timestamp": 1791711069159
+      }
+    ],
+    "9. StatusSettingsModalコンポーネントの実装": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791714298824
+      }
+    ],
+    "10. Enhanced Columnコンポーネントの実装": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715155259
+      }
+    ],
+    "11. KanbanBoardの統合と設定UI追加": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791715164182
+      }
+    ],
+    "12. AppInitializerの拡張とプロバイダー統合": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716128981
+      }
+    ],
+    "13. TaskContextの拡張（TaskV2対応）": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791716133415
+      }
+    ],
+    "16. エラーハンドリングとログ機能の実装": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718442573
+      }
+    ],
+    "17. 最終統合とデモ機能の実装": [
+      {
+        "executionId": "096698e1-de7c-46da-bef1-8ee51680f64b",
+        "chatSessionId": "sess_71f6baad-ee16-407c-abe3-b72be37e4b33",
+        "timestamp": 1791718452527
+      }
+    ]
+  }
+}

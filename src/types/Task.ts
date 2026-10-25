@@ -69,18 +69,20 @@ export interface UIState {
 
 /**
  * Local Storage data structure for persistence
+ * タスクは移行期間中、レガシー(Task)とV2(TaskV2)の両形式が混在しうる
  */
 export interface StoredData {
-  tasks: Task[];
+  tasks: (Task | TaskV2)[];
   version: string;
   lastSaved: string;
 }
 
 /**
  * Task state for the global state management
+ * レガシーとV2の両形式のタスクを保持しうる
  */
 export interface TaskState {
-  tasks: Task[];
+  tasks: (Task | TaskV2)[];
   loading: boolean;
   error: string | null;
 }
@@ -90,9 +92,35 @@ export interface TaskState {
  */
 export type TaskAction =
   | { type: 'LOAD_TASKS_START' }
-  | { type: 'LOAD_TASKS_SUCCESS'; payload: Task[] }
+  | { type: 'LOAD_TASKS_SUCCESS'; payload: (Task | TaskV2)[] }
   | { type: 'LOAD_TASKS_ERROR'; payload: string }
   | { type: 'CREATE_TASK'; payload: Task }
   | { type: 'UPDATE_TASK'; payload: { id: string; updates: Partial<Task> } }
   | { type: 'DELETE_TASK'; payload: string }
-  | { type: 'MOVE_TASK'; payload: { id: string; status: TaskStatus } };
+  | { type: 'MOVE_TASK'; payload: { id: string; status: TaskStatus } }
+  // V2 Actions for CustomStatus support
+  | { type: 'CREATE_TASK_V2'; payload: TaskV2 }
+  | { type: 'UPDATE_TASK_V2'; payload: { id: string; updates: Partial<TaskV2> } }
+  | { type: 'MOVE_TASK_V2'; payload: { id: string; statusId: string } }
+  | { type: 'CLEAR_TASKS' };
+
+/**
+ * V2 Task interface with CustomStatus support
+ * Extends the base Task by replacing status with statusId
+ */
+export interface TaskV2 extends Omit<Task, 'status'> {
+  /** Reference to CustomStatus ID */
+  statusId: string;
+}
+
+/**
+ * Enhanced TaskState that supports both legacy and V2 tasks
+ */
+export interface TaskStateV2 {
+  /** All tasks (both legacy and V2 format) */
+  tasks: (Task | TaskV2)[];
+  loading: boolean;
+  error: string | null;
+  /** Indicates if the context is operating in V2 mode with CustomStatus support */
+  isV2Mode: boolean;
+}

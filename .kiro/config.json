@@ -1,0 +1,22 @@
+{
+  "executionPolicy": {
+    "allowFileCreation": true,
+    "allowFileModification": true,
+    "allowCommandExecution": true,
+    "trustedCommands": [
+      "npm test",
+      "npm run test",
+      "npm run build",
+      "tsc --noEmit",
+      "jest",
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "taskExecution": {
+    "autoRunTests": true,
+    "autoCompile": true,
+    "maxConcurrentTasks": 3,
+    "timeoutSeconds": 300
+  }
+}

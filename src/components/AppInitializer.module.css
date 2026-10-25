@@ -56,6 +56,14 @@
   color: #6b7280;
 }
 
+.loadingContainer small {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
 /* Error Screen */
 .appError {
   display: flex;

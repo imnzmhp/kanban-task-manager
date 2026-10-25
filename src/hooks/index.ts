@@ -2,21 +2,10 @@
  * Hooks barrel exports
  */
 
-export { 
-  useTask, 
-  useTasksByStatus, 
-  useTaskStats, 
-  useTaskSearch, 
-  useTaskForm 
-} from './useTask';
-
-export type { 
-  TaskStats, 
-  TaskFilters, 
-  UseTaskReturn 
-} from './useTask';
-
+// Main hooks exports
+export { useTask } from './useTask';
 export { useToastNotifications } from './useToast';
+export { useStatus } from './useStatus';
 
 export { 
   usePersistence, 

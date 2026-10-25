@@ -22,12 +22,10 @@ describe('LocalStorageService', () => {
   });
 
   describe('saveTasks', () => {
-    it('should save valid tasks array to localStorage', () => {
+    it('should save valid tasks array to localStorage', async () => {
       const tasks: Task[] = [createValidTask()];
 
-      expect(() => {
-        LocalStorageService.saveTasks(tasks);
-      }).not.toThrow();
+      await expect(LocalStorageService.saveTasks(tasks)).resolves.toBeUndefined();
 
       // Verify data was saved
       const savedData = localStorage.getItem('kanban-tasks');
@@ -35,59 +33,59 @@ describe('LocalStorageService', () => {
       expect(savedData).toContain('Test Task');
     });
 
-    it('should throw StorageError for invalid tasks data', () => {
-      expect(() => {
-        LocalStorageService.saveTasks('invalid' as any);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks('invalid' as any);
-      }).toThrow('Invalid tasks data: expected array');
+    it('should throw StorageError for invalid tasks data', async () => {
+      await expect(
+        LocalStorageService.saveTasks('invalid' as any)
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks('invalid' as any)
+      ).rejects.toThrow('Invalid tasks data: expected array');
     });
 
-    it('should throw StorageError for tasks with missing required properties', () => {
+    it('should throw StorageError for tasks with missing required properties', async () => {
       const invalidTask = {
         id: '1',
         title: 'Test Task',
         // missing other required properties
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([invalidTask] as any);
-      }).toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([invalidTask] as any)
+      ).rejects.toThrow(StorageError);
     });
 
-    it('should throw StorageError for tasks with invalid title length', () => {
+    it('should throw StorageError for tasks with invalid title length', async () => {
       const taskWithLongTitle: Task = {
         ...createValidTask(),
         title: 'A'.repeat(201), // Too long
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithLongTitle]);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithLongTitle]);
-      }).toThrow('title must be 200 characters or less');
+      await expect(
+        LocalStorageService.saveTasks([taskWithLongTitle])
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([taskWithLongTitle])
+      ).rejects.toThrow('title must be 200 characters or less');
     });
 
-    it('should throw StorageError for tasks with invalid description length', () => {
+    it('should throw StorageError for tasks with invalid description length', async () => {
       const taskWithLongDescription: Task = {
         ...createValidTask(),
         description: 'A'.repeat(1001), // Too long
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithLongDescription]);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithLongDescription]);
-      }).toThrow('description must be 1000 characters or less');
+      await expect(
+        LocalStorageService.saveTasks([taskWithLongDescription])
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([taskWithLongDescription])
+      ).rejects.toThrow('description must be 1000 characters or less');
     });
 
-    it('should include metadata in saved data', () => {
+    it('should include metadata in saved data', async () => {
       const tasks: Task[] = [createValidTask()];
       
-      LocalStorageService.saveTasks(tasks);
+      await LocalStorageService.saveTasks(tasks);
       
       const savedData = localStorage.getItem('kanban-tasks');
       const parsedData = JSON.parse(savedData!);
@@ -105,11 +103,11 @@ describe('LocalStorageService', () => {
       expect(tasks).toHaveLength(0);
     });
 
-    it('should load and parse valid tasks data', () => {
+    it('should load and parse valid tasks data', async () => {
       const originalTasks: Task[] = [createValidTask()];
 
       // First save the tasks
-      LocalStorageService.saveTasks(originalTasks);
+      await LocalStorageService.saveTasks(originalTasks);
       
       // Then load them back
       const loadedTasks = LocalStorageService.loadTasks();
@@ -148,9 +146,9 @@ describe('LocalStorageService', () => {
       expect(tasks).toHaveLength(0);
     });
 
-    it('should convert date strings back to Date objects', () => {
+    it('should convert date strings back to Date objects', async () => {
       const originalTasks: Task[] = [createValidTask()];
-      LocalStorageService.saveTasks(originalTasks);
+      await LocalStorageService.saveTasks(originalTasks);
       
       const loadedTasks = LocalStorageService.loadTasks();
       
@@ -190,10 +188,10 @@ describe('LocalStorageService', () => {
       expect(info.version).toBeNull();
     });
 
-    it('should return correct info when data exists', () => {
+    it('should return correct info when data exists', async () => {
       const tasks: Task[] = [createValidTask()];
 
-      LocalStorageService.saveTasks(tasks);
+      await LocalStorageService.saveTasks(tasks);
       const info = LocalStorageService.getStorageInfo();
       
       expect(info.isAvailable).toBe(true);
@@ -224,21 +222,21 @@ describe('LocalStorageService', () => {
   });
 
   describe('Task validation', () => {
-    it('should validate task status values', () => {
+    it('should validate task status values', async () => {
       const taskWithInvalidStatus = {
         ...createValidTask(),
         status: 'INVALID' as TaskStatus,
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithInvalidStatus]);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithInvalidStatus]);
-      }).toThrow('status must be one of TODO, DOING, DONE');
+      await expect(
+        LocalStorageService.saveTasks([taskWithInvalidStatus])
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([taskWithInvalidStatus])
+      ).rejects.toThrow('status must be one of TODO, DOING, DONE');
     });
 
-    it('should validate required fields are present', () => {
+    it('should validate required fields are present', async () => {
       const taskMissingId = {
         title: 'Test Task',
         description: 'Test Description', 
@@ -247,40 +245,40 @@ describe('LocalStorageService', () => {
         updatedAt: new Date(),
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([taskMissingId] as any);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks([taskMissingId] as any);
-      }).toThrow("missing required property 'id'");
+      await expect(
+        LocalStorageService.saveTasks([taskMissingId] as any)
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([taskMissingId] as any)
+      ).rejects.toThrow("missing required property 'id'");
     });
 
-    it('should validate empty title', () => {
+    it('should validate empty title', async () => {
       const taskWithEmptyTitle = {
         ...createValidTask(),
         title: '',
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithEmptyTitle]);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithEmptyTitle]);
-      }).toThrow('title must be a non-empty string');
+      await expect(
+        LocalStorageService.saveTasks([taskWithEmptyTitle])
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([taskWithEmptyTitle])
+      ).rejects.toThrow('title must be a non-empty string');
     });
 
-    it('should validate invalid dates', () => {
+    it('should validate invalid dates', async () => {
       const taskWithInvalidDate = {
         ...createValidTask(),
         createdAt: 'invalid-date' as any,
       };
 
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithInvalidDate]);
-      }).toThrow(StorageError);
-      expect(() => {
-        LocalStorageService.saveTasks([taskWithInvalidDate]);
-      }).toThrow('createdAt must be a valid date');
+      await expect(
+        LocalStorageService.saveTasks([taskWithInvalidDate])
+      ).rejects.toThrow(StorageError);
+      await expect(
+        LocalStorageService.saveTasks([taskWithInvalidDate])
+      ).rejects.toThrow('createdAt must be a valid date');
     });
   });
 });

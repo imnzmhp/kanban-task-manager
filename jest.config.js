@@ -3,6 +3,12 @@ export default {
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  // テストファイルは *.test.ts(x) / *.spec.ts(x) のみを対象にする。
+  // __tests__ 配下にある実行ヘルパー(TestRunner.ts, RunIntegrationTests.ts)は
+  // describe/it を持たないため、これにより対象外になる。
+  testMatch: [
+    '<rootDir>/src/**/*.(test|spec).(ts|tsx)',
+  ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },

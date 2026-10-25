@@ -5,3 +5,4 @@
 
 export { LocalStorageService, StorageError } from './LocalStorageService';
 export { TaskRepository, RepositoryError } from './TaskRepository';
+export { ErrorHandler } from './ErrorHandler';

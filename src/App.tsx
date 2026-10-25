@@ -18,6 +18,7 @@ import { ToastContainer, ErrorBoundary, KanbanBoard, AppInitializer } from './co
  * - Responsive design with mobile/desktop support
  */
 function App() {
+
   return (
     <ErrorBoundary>
       <AppProviders>
@@ -32,6 +33,7 @@ function App() {
               <div className="responsive-container">
                 <h1 className="app-title">カンバンタスク管理システム</h1>
                 <p className="app-subtitle tablet-up">タスクを効率的に管理しましょう</p>
+                
               </div>
             </header>
             

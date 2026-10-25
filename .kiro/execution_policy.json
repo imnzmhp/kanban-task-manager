@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "description": "カスタムタスク状態管理システム開発用の実行ポリシー",
+  "policies": {
+    "file_operations": {
+      "create_files": true,
+      "modify_files": true,
+      "delete_files": false
+    },
+    "command_execution": {
+      "npm_commands": true,
+      "test_commands": true,
+      "build_commands": true,
+      "git_commands": false
+    },
+    "directory_access": {
+      "workspace_root": true,
+      "src_directory": true,
+      "node_modules": false,
+      "dot_files": true
+    },
+    "auto_approval": {
+      "typescript_compilation": true,
+      "jest_tests": true,
+      "file_creation_in_src": true,
+      "package_json_modifications": false
+    }
+  },
+  "trusted_commands": [
+    "npm test",
+    "npm run test",
+    "npm run build",
+    "tsc --noEmit",
+    "jest",
+    "prettier --write",
+    "eslint --fix"
+  ],
+  "blocked_commands": [
+    "rm -rf",
+    "sudo",
+    "chmod +x",
+    "npm publish",
+    "git push"
+  ],
+  "project_context": {
+    "name": "custom-task-status-manager",
+    "type": "react-typescript",
+    "environment": "development",
+    "auto_save": true,
+    "backup_before_major_changes": true
+  }
+}

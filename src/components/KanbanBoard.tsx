@@ -1,27 +1,31 @@
 /**
- * KanbanBoard - Main kanban board component
- * Requirements: 2.2, 2.4, 3.1, 3.2, 7.2
+ * KanbanBoard - Main kanban board component with dynamic CustomStatus support
+ * Requirements: 2.2, 2.4, 3.1, 3.2, 7.2, 3.4, 6.5
  */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { TaskStatus, Task, TaskFormData } from '../types/Task';
+import { FiSettings } from 'react-icons/fi';
+import { Task, TaskV2, TaskFormData } from '../types/Task';
 import { useTask } from '../hooks/useTask';
 import { useToastNotifications } from '../hooks/useToast';
-import { Column } from './Column';
+import { useStatusContext } from '../contexts/StatusContext';
+import { EnhancedColumn } from './EnhancedColumn';
+import { StatusSettingsModal } from './StatusSettingsModal';
 import { TaskForm } from './TaskForm';
 import { DeleteConfirmDialog } from './DeleteConfirmDialog';
 import styles from './KanbanBoard.module.css';
 
 /**
- * UI state for managing form and dialog visibility
+ * UI state for managing form and dialog visibility including settings modal
  */
 interface KanbanBoardState {
   isTaskFormOpen: boolean;
-  editingTask: Task | null;
+  editingTask: Task | TaskV2 | null;
   isDeleteDialogOpen: boolean;
   deletingTaskId: string | null;
   deletingTaskTitle: string | null;
+  isSettingsModalOpen: boolean;
 }
 
 /**
@@ -33,11 +37,12 @@ const initialState: KanbanBoardState = {
   isDeleteDialogOpen: false,
   deletingTaskId: null,
   deletingTaskTitle: null,
+  isSettingsModalOpen: false,
 };
 
 /**
  * KanbanBoard component that displays the main kanban board interface
- * with three columns (TODO, DOING, DONE) and drag-and-drop functionality
+ * with dynamic columns based on CustomStatus and drag-and-drop functionality
  * 
  * Note: Data loading is handled by AppInitializer component during app startup
  */
@@ -46,15 +51,89 @@ export const KanbanBoard: React.FC = () => {
   const { 
     loading, 
     error, 
-    moveTask, 
     deleteTask,
     getTaskById,
-    getTaskStats
+    getTaskStats,
+    updateTaskStatus
   } = useTask();
+  const { 
+    statuses, 
+    loading: statusLoading, 
+    error: statusError 
+  } = useStatusContext();
   const toast = useToastNotifications();
 
   /**
+   * Generate sorted statuses for dynamic column rendering
+   * Sorted by displayOrder to maintain consistent column arrangement
+   */
+  const sortedStatuses = useMemo(() => {
+    return [...statuses].sort((a, b) => a.displayOrder - b.displayOrder);
+  }, [statuses]);
+
+  /**
+   * Calculate dynamic stats based on current statuses
+   * TODO: This will need to be updated when TaskContext supports TaskV2 with statusId
+   */
+  const dynamicStats = useMemo(() => {
+    const stats = getTaskStats();
+    
+    // Debug: Log the actual stats structure
+    console.log('KanbanBoard - getTaskStats result:', stats);
+    console.log('KanbanBoard - sortedStatuses:', sortedStatuses.map(s => ({ id: s.id, name: s.name })));
+    
+    // Get task count for each status by checking both statusId (V2) and legacy name mapping
+    const statusStats = sortedStatuses.map(status => {
+      let taskCount = 0;
+      
+      // Try to get count by statusId first (for V2 tasks and custom statuses)
+      if (stats.byStatus[status.id]) {
+        taskCount = stats.byStatus[status.id];
+      }
+      
+      // For default statuses, also check by default status IDs
+      if (!taskCount && ['To Do', 'Doing', 'Done'].includes(status.name)) {
+        const defaultIdMap: Record<string, string> = {
+          'To Do': 'default-todo',
+          'Doing': 'default-doing', 
+          'Done': 'default-done'
+        };
+        const defaultId = defaultIdMap[status.name];
+        if (defaultId && stats.byStatus[defaultId]) {
+          taskCount = stats.byStatus[defaultId];
+        }
+      }
+      
+      // Fallback: check legacy TaskStatus for backward compatibility  
+      if (!taskCount) {
+        // Map current status names to legacy TaskStatus values
+        const nameToLegacyMap: Record<string, string> = {
+          'To Do': 'TODO',
+          'Doing': 'DOING', 
+          'Done': 'DONE'
+        };
+        
+        const legacyKey = nameToLegacyMap[status.name];
+        if (legacyKey && stats.byStatus[legacyKey]) {
+          taskCount = stats.byStatus[legacyKey];
+        }
+      }
+      
+      return {
+        status,
+        count: taskCount
+      };
+    });
+
+    return {
+      statusStats,
+      total: stats.total
+    };
+  }, [sortedStatuses, getTaskStats]);
+
+  /**
    * Handle drag end event for task movement between columns
+   * Updated to work with CustomStatus IDs
    */
   const handleDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -66,50 +145,59 @@ export const KanbanBoard: React.FC = () => {
       return;
     }
 
-    const newStatus = destination.droppableId as TaskStatus;
     const task = getTaskById(draggableId);
-
     if (!task) {
-      toast.showTaskError('移動', 'タスクが見つかりませんでした');
+      toast.showError('エラー', 'タスクが見つかりませんでした');
       return;
     }
 
-    // Only move if status actually changed
-    if (task.status === newStatus) {
+    // Find the target status by ID
+    const targetStatus = sortedStatuses.find(status => status.id === destination.droppableId);
+    if (!targetStatus) {
+      toast.showError('エラー', '無効な移動先です');
       return;
     }
 
+    
+    // Use V2 method to update task status by statusId
+    // This works with all CustomStatus types, not just legacy ones
     try {
-      await moveTask(draggableId, newStatus);
-      toast.showTaskSuccess('移動', `タスクを${getStatusDisplayName(newStatus)}に移動しました`);
+      await updateTaskStatus(draggableId, targetStatus.id);
+      toast.showSuccess('成功', `タスクを${targetStatus.name}に移動しました`);
     } catch (err) {
       console.error('Failed to move task:', err);
-      toast.showTaskError('移動', 'タスクの移動に失敗しました');
+      toast.showError('エラー', 'タスクの移動に失敗しました');
     }
   };
 
   /**
-   * Get display name for status
+   * Handle opening settings modal
    */
-  const getStatusDisplayName = (status: TaskStatus): string => {
-    switch (status) {
-      case 'TODO':
-        return 'TODO';
-      case 'DOING':
-        return 'DOING';
-      case 'DONE':
-        return 'DONE';
-      default:
-        return status;
-    }
+  const handleOpenSettings = () => {
+    setUiState(prev => ({
+      ...prev,
+      isSettingsModalOpen: true,
+    }));
+  };
+
+  /**
+   * Handle closing settings modal
+   */
+  const handleCloseSettings = () => {
+    setUiState(prev => ({
+      ...prev,
+      isSettingsModalOpen: false,
+    }));
   };
 
   /**
    * Handle opening task form for adding new task
+   * Updated to work with CustomStatus IDs
    */
-  const handleAddTask = (_status: TaskStatus) => {
-    // Note: We ignore the status parameter since all new tasks are created with TODO status
-    // and users can drag them to the desired column
+  const handleAddTask = (_statusId: string) => {
+    // For now, all new tasks are created with TODO status regardless of column
+    // This maintains compatibility with the existing TaskContext
+    // TODO: Update when TaskV2 with statusId support is implemented
     setUiState({
       ...initialState,
       isTaskFormOpen: true,
@@ -123,7 +211,7 @@ export const KanbanBoard: React.FC = () => {
   const handleEditTask = (taskId: string) => {
     const task = getTaskById(taskId);
     if (!task) {
-      toast.showTaskError('編集', 'タスクが見つかりませんでした');
+      toast.showError('エラー', 'タスクが見つかりませんでした');
       return;
     }
 
@@ -140,7 +228,7 @@ export const KanbanBoard: React.FC = () => {
   const handleDeleteTask = (taskId: string) => {
     const task = getTaskById(taskId);
     if (!task) {
-      toast.showTaskError('削除', 'タスクが見つかりませんでした');
+      toast.showError('エラー', 'タスクが見つかりませんでした');
       return;
     }
 
@@ -170,7 +258,7 @@ export const KanbanBoard: React.FC = () => {
     // TaskForm handles the actual save operation through its own context
     // Just close the form and show success message
     const operation = uiState.editingTask ? '更新' : '作成';
-    toast.showTaskSuccess(operation, taskData.title);
+    toast.showSuccess('成功', `タスク「${taskData.title}」を${operation}しました`);
     handleTaskFormClose();
   };
 
@@ -184,11 +272,11 @@ export const KanbanBoard: React.FC = () => {
 
     try {
       await deleteTask(uiState.deletingTaskId);
-      toast.showTaskSuccess('削除', 'タスクを削除しました');
+      toast.showSuccess('成功', 'タスクを削除しました');
       handleDeleteDialogClose();
     } catch (err) {
       console.error('Failed to delete task:', err);
-      toast.showTaskError('削除', 'タスクの削除に失敗しました');
+      toast.showError('エラー', 'タスクの削除に失敗しました');
     }
   };
 
@@ -204,30 +292,25 @@ export const KanbanBoard: React.FC = () => {
     }));
   };
 
-  /**
-   * Get task statistics for display
-   */
-  const stats = getTaskStats();
-
   // Show loading state
-  if (loading) {
+  if (loading || statusLoading) {
     return (
       <div className={styles.kanbanBoard}>
         <div className={styles.loadingState}>
           <div className={styles.spinner} />
-          <p>タスクを読み込み中...</p>
+          <p>ボードを読み込み中...</p>
         </div>
       </div>
     );
   }
 
   // Show error state
-  if (error) {
+  if (error || statusError) {
     return (
       <div className={styles.kanbanBoard}>
         <div className={styles.errorState}>
           <h3>エラーが発生しました</h3>
-          <p>{error}</p>
+          <p>{error || statusError}</p>
           <p>アプリケーションを再読み込みしてください。</p>
         </div>
       </div>
@@ -239,48 +322,59 @@ export const KanbanBoard: React.FC = () => {
       {/* Board Header */}
       <div className={styles.boardHeader}>
         <h2 className={styles.boardTitle}>カンバンボード</h2>
-        <div className={styles.boardStats}>
-          <span className={styles.statItem}>
-            合計: <strong>{stats.total}</strong>
-          </span>
-          <span className={styles.statItem}>
-            TODO: <strong>{stats.todo}</strong>
-          </span>
-          <span className={styles.statItem}>
-            DOING: <strong>{stats.doing}</strong>
-          </span>
-          <span className={styles.statItem}>
-            DONE: <strong>{stats.done}</strong>
-          </span>
+        <div className={styles.headerActions}>
+          <div className={styles.boardStats}>
+            <span className={styles.statItem}>
+              合計: <strong>{dynamicStats.total}</strong>
+            </span>
+            {dynamicStats.statusStats.map(({ status, count }) => (
+              <span key={status.id} className={styles.statItem}>
+                {status.name}: <strong>{count}</strong>
+              </span>
+            ))}
+          </div>
+          <button
+            className={styles.settingsButton}
+            onClick={handleOpenSettings}
+            title="設定"
+            aria-label="ステータス設定を開く"
+            data-testid="settings-button"
+          >
+            <FiSettings size={20} />
+          </button>
         </div>
       </div>
 
       {/* Drag and Drop Context */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className={styles.boardColumns} data-testid="board-columns">
-          {/* TODO Column */}
-          <Column
-            status="TODO"
-            onAddTask={handleAddTask}
-            onEditTask={handleEditTask}
-            onDeleteTask={handleDeleteTask}
-          />
-
-          {/* DOING Column */}
-          <Column
-            status="DOING"
-            onAddTask={handleAddTask}
-            onEditTask={handleEditTask}
-            onDeleteTask={handleDeleteTask}
-          />
-
-          {/* DONE Column */}
-          <Column
-            status="DONE"
-            onAddTask={handleAddTask}
-            onEditTask={handleEditTask}
-            onDeleteTask={handleDeleteTask}
-          />
+          {/* Dynamic Enhanced Columns based on CustomStatus */}
+          {sortedStatuses.map((status) => (
+            <EnhancedColumn
+              key={status.id}
+              status={status}
+              onAddTask={handleAddTask}
+              onEditTask={handleEditTask}
+              onDeleteTask={handleDeleteTask}
+            />
+          ))}
+          
+          {/* Empty State when no statuses exist */}
+          {sortedStatuses.length === 0 && (
+            <div className={styles.noStatusesState}>
+              <div className={styles.noStatusesContent}>
+                <h3>ステータスがありません</h3>
+                <p>ステータス設定からカスタムステータスを作成してください</p>
+                <button
+                  className={styles.createStatusButton}
+                  onClick={handleOpenSettings}
+                  data-testid="create-first-status"
+                >
+                  ステータスを作成
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </DragDropContext>
 
@@ -292,6 +386,12 @@ export const KanbanBoard: React.FC = () => {
         onCancel={handleTaskFormClose}
       />
 
+      {/* Status Settings Modal */}
+      <StatusSettingsModal
+        isOpen={uiState.isSettingsModalOpen}
+        onClose={handleCloseSettings}
+      />
+
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmDialog
         isOpen={uiState.isDeleteDialogOpen}
@@ -300,22 +400,8 @@ export const KanbanBoard: React.FC = () => {
         onCancel={handleDeleteDialogClose}
       />
 
-      {/* Empty State */}
-      {stats.total === 0 && (
-        <div className={styles.emptyBoardState}>
-          <div className={styles.emptyStateContent}>
-            <h3>まだタスクがありません</h3>
-            <p>新しいタスクを作成して始めましょう</p>
-            <button
-              className={styles.createFirstTaskButton}
-              onClick={() => handleAddTask('TODO')}
-              data-testid="create-first-task"
-            >
-              最初のタスクを作成
-            </button>
-          </div>
-        </div>
-      )}
+
+
     </div>
   );
 };

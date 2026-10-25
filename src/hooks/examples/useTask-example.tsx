@@ -4,23 +4,18 @@
  */
 
 import React from 'react';
-import { useTask, useTaskStats, useTasksByStatus } from '../useTask';
+import { useTask, useTaskStats, useTasksByStatus, useTaskForm, useTaskSearch } from '../useTask';
 
 /**
  * Example component showing basic task operations
  */
 export const TaskOperationsExample: React.FC = () => {
-  const { 
-    tasks,
-    loading,
-    error,
-    createTask,
-    validateTaskForm
-  } = useTask();
+  const { tasks, loading, error } = useTask();
+  const { validateTaskForm, createTask } = useTaskForm();
 
   const handleCreateTask = async () => {
     const taskData = { title: 'New Task', description: 'Task description' };
-    
+
     const validation = validateTaskForm(taskData);
     if (!validation.isValid) {
       console.error('Validation errors:', validation.errors);
@@ -58,9 +53,9 @@ export const TaskStatsExample: React.FC = () => {
       <h2>Task Statistics</h2>
       <ul>
         <li>Total: {stats.total}</li>
-        <li>TODO: {stats.todo}</li>
-        <li>DOING: {stats.doing}</li>
-        <li>DONE: {stats.done}</li>
+        <li>TODO: {stats.byStatus['TODO'] ?? 0}</li>
+        <li>DOING: {stats.byStatus['DOING'] ?? 0}</li>
+        <li>DONE: {stats.byStatus['DONE'] ?? 0}</li>
       </ul>
     </div>
   );
@@ -89,19 +84,19 @@ export const TaskColumnExample: React.FC<{ status: 'TODO' | 'DOING' | 'DONE' }> 
  * Example component showing task filtering
  */
 export const TaskSearchExample: React.FC = () => {
-  const { filterTasks } = useTask();
+  const { searchTasks } = useTaskSearch();
   const [searchTerm, setSearchTerm] = React.useState('');
-  
+
   const filteredTasks = React.useMemo(() => {
-    return filterTasks({ search: searchTerm });
-  }, [filterTasks, searchTerm]);
+    return searchTasks(searchTerm);
+  }, [searchTasks, searchTerm]);
 
   return (
     <div>
       <h2>Task Search</h2>
-      <input 
-        type="text" 
-        placeholder="Search tasks..." 
+      <input
+        type="text"
+        placeholder="Search tasks..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
@@ -111,7 +106,6 @@ export const TaskSearchExample: React.FC = () => {
           <div key={task.id}>
             <h4>{task.title}</h4>
             <p>{task.description}</p>
-            <span>Status: {task.status}</span>
           </div>
         ))}
       </div>

@@ -1,0 +1,20 @@
+{
+  "task_automation": {
+    "auto_run_tests": true,
+    "auto_compile_typescript": true,
+    "auto_format_code": true
+  },
+  "file_management": {
+    "create_test_files": true,
+    "update_index_exports": true
+  },
+  "development_tools": {
+    "typescript": {
+      "strict_mode": true,
+      "compile_on_save": true
+    },
+    "jest": {
+      "run_on_file_change": false
+    }
+  }
+}

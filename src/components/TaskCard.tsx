@@ -5,21 +5,21 @@
 
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Task } from '../types/Task';
+import { Task, TaskV2 } from '../types/Task';
 import styles from './TaskCard.module.css';
 
 /**
  * Props for TaskCard component
  */
 interface TaskCardProps {
-  /** The task to display */
-  task: Task;
+  /** The task to display（レガシー/V2どちらの形式も受け付ける） */
+  task: Task | TaskV2;
   
   /** Index of task within the column (for drag and drop) */
   index: number;
   
   /** Callback when edit button is clicked */
-  onEdit: (task: Task) => void;
+  onEdit: (task: Task | TaskV2) => void;
   
   /** Callback when delete button is clicked */
   onDelete: (taskId: string) => void;

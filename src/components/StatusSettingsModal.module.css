@@ -1,0 +1,1051 @@
+/**
+ * StatusSettingsModal component styles (CSS Module)
+ * Modal dialog for custom status settings management
+ * 
+ * Requirements: 6.1, 6.2, 6.3, 5.1, 5.2, 5.3
+ */
+
+/* Backdrop overlay */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: backdropFadeIn 0.2s ease-out;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal container */
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header section */
+.header {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.closeButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Content section */
+.content {
+  padding: 20px 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.description {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Error and loading states */
+.errorMessage {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #dc2626;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+/* Status list */
+.statusList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual status item */
+.statusItem {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  cursor: default;
+}
+
+.statusItem:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Drag and drop states */
+.statusItem.dragging {
+  opacity: 0.8;
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #3b82f6;
+  z-index: 1000;
+}
+
+.statusItem.dragOver {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+/* Drag handle */
+.dragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  margin-right: 12px;
+  cursor: grab;
+  color: #9ca3af;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.dragHandle:hover {
+  color: #6b7280;
+  background-color: #f3f4f6;
+}
+
+.dragHandle:active,
+.dragHandle:focus {
+  cursor: grabbing;
+  color: #374151;
+  background-color: #e5e7eb;
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.dragHandle[data-state="dragging"] {
+  cursor: grabbing;
+  color: #3b82f6;
+}
+
+/* Grip icon */
+.gripIcon {
+  transition: color 0.2s ease-in-out;
+}
+
+/* Drag overlay */
+.dragOverlay {
+  transform: rotate(3deg);
+  opacity: 0.95;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  background-color: #ffffff;
+  z-index: 999;
+}
+
+/* Status color indicator */
+.statusColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid;
+  margin-right: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Status information */
+.statusInfo {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.statusName {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  cursor: default;
+}
+
+.statusMeta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.statusOrder {
+  font-weight: 500;
+}
+
+
+/* Status preview */
+.statusPreview {
+  flex-shrink: 0;
+}
+
+.previewSample {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+}
+
+/* Status actions (future enhancement) */
+.statusActions {
+  display: flex;
+  gap: 4px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease-in-out;
+  color: #6b7280;
+}
+
+.actionButton:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.actionButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Status name editing input */
+.statusEditInput {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #3b82f6;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  background-color: #ffffff;
+  font-family: inherit;
+  line-height: 1.3;
+}
+
+.statusEditInput:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 1px;
+}
+
+/* Add button styles */
+.addButton {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+.addButton:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.addButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.addButton:disabled {
+  background: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Warning text for delete dialogs */
+.warning {
+  font-weight: 500;
+  color: #dc2626;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Actions section */
+.actions {
+  padding: 16px 24px 24px 24px;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  min-width: 80px;
+}
+
+.cancelButton {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.cancelButton:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.cancelButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Tablet responsive styles */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 500px;
+    width: 95%;
+    margin: 16px;
+  }
+
+  .header {
+    padding: 20px 20px 14px 20px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .content {
+    padding: 16px 20px;
+  }
+
+  .statusItem {
+    padding: 14px;
+  }
+
+  .statusColor {
+    width: 14px;
+    height: 14px;
+    margin-right: 14px;
+  }
+
+  .statusName {
+    font-size: 15px;
+  }
+
+  .statusMeta {
+    font-size: 11px;
+  }
+
+  .actions {
+    padding: 14px 20px 20px 20px;
+  }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 480px) {
+  .modal {
+    width: calc(100% - 24px);
+    margin: 12px;
+    max-height: calc(100vh - 24px);
+  }
+
+  .header {
+    padding: 16px 16px 12px 16px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .closeButton {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 12px 16px;
+  }
+
+  .description {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .statusItem {
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .dragHandle {
+    order: 1;
+    align-self: flex-start;
+    margin-right: 0;
+    margin-bottom: 4px;
+  }
+
+  .statusColor {
+    order: 2;
+    align-self: flex-start;
+  }
+
+  .statusInfo {
+    order: 3;
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .statusName {
+    font-size: 14px;
+  }
+
+  .statusMeta {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .statusPreview {
+    order: 4;
+    align-self: flex-end;
+  }
+
+  .statusActions {
+    order: 5;
+    align-self: flex-end;
+    margin-left: 0;
+  }
+
+  .previewSample {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .actions {
+    padding: 12px 16px 16px 16px;
+  }
+
+  .button {
+    width: 100%;
+    padding: 12px 16px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .modal {
+    border: 2px solid #000;
+  }
+
+  .title {
+    color: #000;
+  }
+
+  .description {
+    color: #333;
+  }
+
+  .statusItem {
+    border: 2px solid #000;
+  }
+
+  .statusName {
+    color: #000;
+  }
+
+  .statusMeta {
+    color: #333;
+  }
+
+  .cancelButton {
+    border: 2px solid #000;
+    background: #fff;
+    color: #000;
+  }
+
+  .closeButton {
+    border: 1px solid #666;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop {
+    animation: none;
+  }
+
+  .modal {
+    animation: none;
+  }
+
+  .button {
+    transition: none;
+  }
+
+  .statusItem {
+    transition: none;
+  }
+
+  .previewSample {
+    transition: none;
+  }
+
+  .dragHandle {
+    transition: none;
+  }
+
+  .actionButton {
+    transition: none;
+  }
+
+  .gripIcon {
+    transition: none;
+  }
+
+  /* For users with reduced motion, provide instant feedback instead of animations */
+  .statusItem.dragging {
+    transform: none;
+    opacity: 0.7;
+  }
+
+  .dragOverlay {
+    transform: none;
+    opacity: 0.9;
+  }
+}
+
+/* Focus trap styles for accessibility */
+.modal:focus {
+  outline: none;
+}
+
+/* Print styles */
+@media print {
+  .backdrop {
+    display: none;
+  }
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+  .modal {
+    background: #1f2937;
+    border: 1px solid #374151;
+  }
+
+  .header {
+    border-bottom-color: #374151;
+  }
+
+  .title {
+    color: #f9fafb;
+  }
+
+  .closeButton {
+    color: #9ca3af;
+  }
+
+  .closeButton:hover {
+    background-color: #374151;
+    color: #f3f4f6;
+  }
+
+  .description {
+    color: #d1d5db;
+  }
+
+  .statusItem {
+    background-color: #374151;
+    border-color: #4b5563;
+  }
+
+  .statusItem:hover {
+    border-color: #6b7280;
+  }
+
+  .statusItem.dragging {
+    border-color: #60a5fa;
+    background-color: #1f2937;
+  }
+
+  .statusItem.dragOver {
+    border-color: #60a5fa;
+    background-color: #1e3a8a;
+  }
+
+  .dragHandle {
+    color: #6b7280;
+  }
+
+  .dragHandle:hover {
+    color: #9ca3af;
+    background-color: #4b5563;
+  }
+
+  .dragHandle:active,
+  .dragHandle:focus {
+    color: #f3f4f6;
+    background-color: #6b7280;
+    outline-color: #60a5fa;
+  }
+
+  .dragOverlay {
+    background-color: #1f2937;
+    border-color: #60a5fa;
+  }
+
+  .statusName {
+    color: #f9fafb;
+  }
+
+  .statusMeta {
+    color: #d1d5db;
+  }
+
+  .actions {
+    border-top-color: #374151;
+  }
+
+  .cancelButton {
+    background: #374151;
+    color: #f3f4f6;
+    border-color: #6b7280;
+  }
+
+  .cancelButton:hover {
+    background: #4b5563;
+    border-color: #9ca3af;
+  }
+
+  .actionButton {
+    background: #374151;
+    border-color: #4b5563;
+    color: #d1d5db;
+  }
+
+  .actionButton:hover {
+    background: #4b5563;
+    border-color: #6b7280;
+    color: #f3f4f6;
+  }
+
+  .emptyState {
+    color: #6b7280;
+  }
+
+  .loading {
+    color: #9ca3af;
+  }
+}
+/* New Status Creation Form */
+.newStatusForm {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+}
+
+.newStatusTitle {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.fieldError {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.formActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.saveButton {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #047857;
+  border-color: #047857;
+}
+
+.saveButton:focus {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+.saveButton:disabled {
+  background: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Dark mode styles for new status form */
+@media (prefers-color-scheme: dark) {
+  .newStatusForm {
+    background-color: #374151;
+    border-color: #4b5563;
+  }
+  
+  .newStatusTitle {
+    color: #f9fafb;
+  }
+  
+  .label {
+    color: #e5e7eb;
+  }
+  
+  .input {
+    background-color: #1f2937;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+  
+  .input::placeholder {
+    color: #6b7280;
+  }
+  
+  .fieldError {
+    color: #f87171;
+  }
+}
+
+/* Mobile responsive styles for new status form */
+@media (max-width: 480px) {
+  .newStatusForm {
+    margin-top: 16px;
+    padding: 16px;
+  }
+  
+  .newStatusTitle {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  
+  .formGroup {
+    margin-bottom: 12px;
+  }
+  
+  .label {
+    font-size: 13px;
+  }
+  
+  .input {
+    padding: 10px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .formActions {
+    flex-direction: column-reverse;
+  }
+  
+  .formActions .button {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+
+/* New Status Creation Form */
+.newStatusForm {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+}
+
+.newStatusTitle {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.fieldError {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.formActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.saveButton {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #047857;
+  border-color: #047857;
+}
+
+.saveButton:focus {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+.saveButton:disabled {
+  background: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Dark mode styles for new status form */
+@media (prefers-color-scheme: dark) {
+  .newStatusForm {
+    background-color: #374151;
+    border-color: #4b5563;
+  }
+  
+  .newStatusTitle {
+    color: #f9fafb;
+  }
+  
+  .label {
+    color: #e5e7eb;
+  }
+  
+  .input {
+    background-color: #1f2937;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+  
+  .input::placeholder {
+    color: #6b7280;
+  }
+  
+  .fieldError {
+    color: #f87171;
+  }
+}
+
+/* Mobile responsive styles for new status form */
+@media (max-width: 480px) {
+  .newStatusForm {
+    margin-top: 16px;
+    padding: 16px;
+  }
+  
+  .newStatusTitle {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  
+  .formGroup {
+    margin-bottom: 12px;
+  }
+  
+  .label {
+    font-size: 13px;
+  }
+  
+  .input {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .formActions {
+    flex-direction: column-reverse;
+  }
+  
+  .formActions .button {
+    width: 100%;
+    margin: 0;
+  }
+}

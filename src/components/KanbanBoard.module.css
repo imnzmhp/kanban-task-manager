@@ -26,6 +26,44 @@
   backdrop-filter: blur(8px);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.settingsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border: 1px solid rgba(209, 213, 219, 0.8);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settingsButton:hover {
+  background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.settingsButton:focus {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.settingsButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .boardTitle {
   font-size: 28px;
   font-weight: 700;
@@ -62,6 +100,40 @@
 .statItem strong {
   color: #1e293b;
   font-weight: 600;
+}
+
+/* Settings Button */
+.settingsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.settingsButton:hover {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  color: #475569;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.settingsButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.settingsButton:focus {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
 }
 
 .boardColumns {
@@ -132,14 +204,57 @@
 }
 
 /* Empty State */
-.emptyBoardState {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+.noStatusesState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 400px;
+}
+
+.noStatusesContent {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  padding: 48px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  backdrop-filter: blur(8px);
   text-align: center;
-  z-index: 10;
-  pointer-events: none;
+}
+
+.noStatusesContent h3 {
+  color: #1e293b;
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.noStatusesContent p {
+  color: #64748b;
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.createStatusButton {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.createStatusButton:hover {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
 }
 
 .emptyStateContent {
@@ -167,24 +282,8 @@
   line-height: 1.6;
 }
 
-.createFirstTaskButton {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
 
-.createFirstTaskButton:hover {
-  background: linear-gradient(135deg, #059669, #047857);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-}
+
 
 /* Responsive Design - Tablet */
 @media (max-width: 768px) {
@@ -198,6 +297,16 @@
     padding: 16px;
   }
   
+  .headerActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .settingsButton {
+    width: 40px;
+    height: 40px;
+  }
+  
   .boardTitle {
     font-size: 24px;
   }
@@ -207,12 +316,19 @@
     width: 100%;
   }
   
+  .settingsButton {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
   .boardColumns {
     gap: 16px;
     min-width: 100%;
   }
   
-  .emptyStateContent {
+  .emptyStateContent,
+  .noStatusesContent {
     padding: 32px;
     margin: 20px;
   }
@@ -228,6 +344,18 @@
     padding: 12px;
   }
   
+  .headerActions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .settingsButton {
+    width: 36px;
+    height: 36px;
+    align-self: flex-end;
+  }
+  
   .boardTitle {
     font-size: 20px;
   }
@@ -241,6 +369,12 @@
     padding: 8px 12px;
   }
   
+  .settingsButton {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
   .boardColumns {
     flex-direction: column;
     gap: 12px;
@@ -248,16 +382,18 @@
     overflow-x: visible;
   }
   
-  .emptyStateContent {
+  .emptyStateContent,
+  .noStatusesContent {
     padding: 24px;
     margin: 16px;
   }
   
-  .emptyStateContent h3 {
+  .emptyStateContent h3,
+  .noStatusesContent h3 {
     font-size: 20px;
   }
   
-  .createFirstTaskButton {
+  .createStatusButton {
     padding: 12px 24px;
     font-size: 14px;
   }
@@ -314,7 +450,18 @@
     color: #000000;
   }
   
-  .createFirstTaskButton,
+  .settingsButton {
+    background: #ffffff;
+    border: 2px solid #000000;
+    color: #000000;
+  }
+  
+  .settingsButton:hover {
+    background: #000000;
+    color: #ffffff;
+  }
+  
+  .createStatusButton,
   .retryButton {
     background: #000000;
     color: #ffffff;
@@ -329,13 +476,16 @@
   }
   
   .statItem,
-  .createFirstTaskButton,
+  .settingsButton,
+  .createStatusButton,
   .retryButton {
     transition: none;
   }
   
   .statItem:hover,
-  .createFirstTaskButton:hover,
+  .settingsButton:hover,
+  :hover,
+  .createStatusButton:hover,
   .retryButton:hover {
     transform: none;
   }
@@ -369,16 +519,29 @@
     color: #f1f5f9;
   }
   
-  .emptyStateContent {
+  .settingsButton {
+    background: linear-gradient(135deg, #475569, #64748b);
+    border-color: rgba(71, 85, 105, 0.8);
+    color: #e2e8f0;
+  }
+  
+  .settingsButton:hover {
+    background: linear-gradient(135deg, #64748b, #71717a);
+  }
+  
+  .emptyStateContent,
+  .noStatusesContent {
     background: linear-gradient(135deg, #334155, #475569);
     border-color: rgba(71, 85, 105, 0.8);
   }
   
-  .emptyStateContent h3 {
+  .emptyStateContent h3,
+  .noStatusesContent h3 {
     color: #f1f5f9;
   }
   
-  .emptyStateContent p {
+  .emptyStateContent p,
+  .noStatusesContent p {
     color: #cbd5e1;
   }
 }
@@ -408,12 +571,8 @@
     page-break-inside: avoid;
   }
   
-  .createFirstTaskButton,
   .retryButton {
     display: none;
   }
   
-  .emptyBoardState {
-    display: none;
-  }
 }
